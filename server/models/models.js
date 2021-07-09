@@ -4,7 +4,7 @@ const {DataTypes} = require('sequelize')
 
 const Queues = sequelize.define('queues',{
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    name: {type: DataTypes.STRING, unique: true},
+    name: {type: DataTypes.STRING},
     description: {type: DataTypes.STRING}
 })
 

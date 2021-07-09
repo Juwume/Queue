@@ -12,6 +12,6 @@ router.use('/queue', queueRouter)
 router.use('/myQs', myQsRouter)
 router.use('/findQ', findQRouter)
 router.use('/about', aboutRouter)
-router.use('/create', createQRouter)
+router.use('/createQ', createQRouter)
 
 module.exports = router
