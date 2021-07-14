@@ -1,7 +1,8 @@
 const ApiError = require("../error/apiError")
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const {User} = require('../models/models')
+const {User, Queue} = require('../models/models')
+
 
 
 class UserController{
@@ -70,6 +71,34 @@ class UserController{
         )
         return res.json({token})
     }
+
+    async getAllQs(req, res, next){
+        try {
+            const {id} = req.query
+
+            let query = await User.findAll({
+                attributes: ['id','username'], 
+                where:{
+                    id
+                }
+                ,
+                include: [{
+                    model: Queue,
+                    attributes: ['id','name', 'description'],
+                    required: true
+                }]
+            })
+            if(query.length == 0){
+                res.json({message:"Очередей нет"})
+            }
+            return res.json(query)
+
+        } catch (error) {
+            return next(ApiError.internal('Не удалось выполнить запрос'))
+        }
+        
+    }
+
 
 }
 

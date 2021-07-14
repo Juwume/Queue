@@ -2,7 +2,7 @@ const sequelize = require('../db')
 
 const {DataTypes} = require('sequelize')
 
-const Queues = sequelize.define('queues',{
+const Queue = sequelize.define('queues',{
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     name: {type: DataTypes.STRING},
     description: {type: DataTypes.STRING}
@@ -21,11 +21,11 @@ const QueueUser = sequelize.define('queue_user',{
     
 })
 
-Queues.belongsToMany(User, {through: QueueUser})
-User.belongsToMany(Queues, {through: QueueUser})
+Queue.belongsToMany(User, {through: QueueUser})
+User.belongsToMany(Queue, {through: QueueUser})
 
 module.exports = {
-    Queues,
+    Queue,
     User,
     QueueUser
 }
