@@ -1,15 +1,15 @@
-package-lock.json
-.env
-node_modules
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-/client/.pnp
+# dependencies
+/node_modules
+/.pnp
 .pnp.js
 
 # testing
-/client/coverage
+/coverage
 
 # production
-/client/build
+/build
 
 # misc
 .DS_Store

@@ -1,0 +1,5 @@
+export const MYQS_ROUTE = '/myQs'
+export const FIND_ROUTE = '/find'
+export const ABOUT_ROUTE = '/about'
+export const PROFILE_ROUTE = '/profile'
+export const QUEUE_ROUTE = '/queue'
