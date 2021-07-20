@@ -2,7 +2,9 @@ import MyQs from "./page/MyQs"
 import Profile from "./page/Profile"
 import About from "./page/About"
 import Find from "./page/Find"
-import { ABOUT_ROUTE, FIND_ROUTE, MYQS_ROUTE, PROFILE_ROUTE, QUEUE_ROUTE } from "./utils/consts"
+import Queue from "./page/Queue"
+import { ABOUT_ROUTE, CREATE_ROUTE, FIND_ROUTE, MYQS_ROUTE, PROFILE_ROUTE, QUEUE_ROUTE } from "./utils/consts"
+import Create from "./page/Create"
 
 export const authRoutes = [
     {
@@ -13,6 +15,10 @@ export const authRoutes = [
     {
         path: PROFILE_ROUTE,
         Component: Profile
+    },
+    {
+        path: CREATE_ROUTE,
+        Component: Create
     }
 ]
 
@@ -27,6 +33,6 @@ export const publicRoutes = [
     },
     {
         path: QUEUE_ROUTE + '/:id',
-        Component: Find
+        Component: Queue
     }
 ]

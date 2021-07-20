@@ -4,7 +4,7 @@ import { Button, Form, Modal } from 'react-bootstrap'
 const Registration = ({show,onHide}) => {
     return (
         <Modal  
-      size="lg"
+      size="md"
       centered
       show={show}
       onHide={onHide}
@@ -16,8 +16,22 @@ const Registration = ({show,onHide}) => {
       </Modal.Header>
       <Modal.Body>
         <Form>
+        <Form.Label>Логин</Form.Label>
           <Form.Control
-            placeholder={'Введите username'}
+            placeholder={'Введите логин'}
+            className='mb-3'
+          />
+          <Form.Label>Пароль</Form.Label>
+          <Form.Control
+            placeholder={'Введите пароль'}
+            type="password"
+            className='mb-3'
+          />
+          <Form.Label>Email</Form.Label>
+          <Form.Control 
+            type="email" 
+            placeholder="name@example.com" 
+            className='mb-3'
           />
         </Form>
       </Modal.Body>
