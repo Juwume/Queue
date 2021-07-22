@@ -6,42 +6,49 @@ import {observer} from 'mobx-react-lite'
 import Login from '../modals/Login'
 import Registration from '../modals/Registration'
 
-function simulateNetworkRequest() {
-  return new Promise((resolve) => setTimeout(resolve, 500));
-}
 
-function LoadingButton(MyString, prop) {
-  const [isLoading, setLoading] = useState(false);
+// function simulateNetworkRequest() {
+//   return new Promise((resolve) => setTimeout(resolve, 500));
+// }
 
-  useEffect(() => {
-    if (isLoading) {
-      simulateNetworkRequest().then(() => {
-        setLoading(false);
-      });
-    }
-  }, [isLoading]);
+// function LoadingButton(MyString, prop) {
+//   const [isLoading, setLoading] = useState(false);
 
-  const handleClick = () => setLoading(true);
-  const forClick = () => {
-    if(!isLoading) handleClick()
-    prop(true)
-  }
-  return (
-    <Button
+//   useEffect(() => {
+//     if (isLoading) {
+//       simulateNetworkRequest().then(() => {
+//         setLoading(false);
+//       });
+//     }
+//   }, [isLoading]);
+
+//   const handleClick = () => setLoading(true);
+//   const forClick = () => {
+//     if(!isLoading) handleClick()
+//     prop(true)
+//   }
+//   return (
+//     <Button
       
-      variant="primary"
-      className='m-1'
-      disabled={isLoading}
-      onClick={forClick}
-    >
-      {isLoading ? 'Загрузка…' : MyString}
-    </Button>
-  );
-}
+//       variant="primary"
+//       className='m-1'
+//       disabled={isLoading}
+//       onClick={forClick}
+//     >
+//       {isLoading ? 'Загрузка…' : MyString}
+//     </Button>
+//   );
+// }
 
 const NavBar = observer(() => {
+
+    const logOut = () => {
+      user.setUser({})
+      user.setIsAuth(false)
+    }
+
     const {user} = useContext(Context)
-    user.setIsAuth(true)
+   
     const [loginVisible, setLoginVisible] = useState(false)
     const [registrationVisible, setRegistrationVisible] = useState(false)
 
@@ -50,25 +57,45 @@ const NavBar = observer(() => {
         <Container>
         <Nav className='ml-auto'>
           <NavLink style={{color:'white',marginRight:'1em', fontSize:'20px',alignSelf:'center'}}  className='ml-1' href={ABOUT_ROUTE}>SimpleQueue</NavLink>
-          <Button variant={"outline-light"} className='m-1' href={FIND_ROUTE}>Поиск</Button> 
+          <Button variant={"outline-light"} className='m-1 align-self-center' href={FIND_ROUTE}>Поиск</Button> 
             
-          {(() => {if(user.isAuth) return(
-            <div>
-              <Button  variant={"outline-light"} className='m-1' href={CREATE_ROUTE}>Создать</Button>
-              <Button  variant={"outline-light"} className='m-1' href={MYQS_ROUTE} >Мои очереди</Button>
-            </div>
-          )})()}
+          {user.isAuth?<Button  variant={"outline-light"} className='m-1 align-self-center' href={CREATE_ROUTE}>Создать</Button>:null}
+          {user.isAuth?<Button  variant={"outline-light"} className='m-1 align-self-center' href={MYQS_ROUTE} >Мои очереди</Button>:null}
+          
           
           
         </Nav>
         {user.isAuth ? 
-        <div>
-
-        </div> :
+        <Nav className='ml-auto'>
+          <Button
+      
+            variant="primary"
+            className='m-1'
+            onClick={logOut}
+          >
+            Выйти
+          </Button>
+        </Nav> :
         <Nav className='ml-auto'>
 
-          {LoadingButton('Войти', setLoginVisible)}
-          {LoadingButton('Регистрация', setRegistrationVisible)}
+          <Button
+      
+            variant="primary"
+            className='m-1'
+            onClick={() => setLoginVisible(true)}
+          >
+            Войти
+          </Button>
+          <Button
+      
+            variant="primary"
+            className='m-1'
+            onClick={() => setRegistrationVisible(true)}
+          >
+            Регистрация
+          </Button>
+          {/* {LoadingButton('Войти', setLoginVisible)}
+          {LoadingButton('Регистрация', setRegistrationVisible)} */}
         </Nav> 
         }
         

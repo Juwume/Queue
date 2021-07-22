@@ -43,6 +43,9 @@ class UserController{
         const {username, password} = req.body
 
         let candidate = await User.findOne({where:{username}})
+        if(!candidate){
+            return next(ApiError.internal("Пользователь не найден"))
+        }
         
         let cmpPass = bcrypt.compareSync(password,candidate.password)
         if(!cmpPass){
@@ -61,7 +64,7 @@ class UserController{
 
     }
 
-    async check(req, res, next){
+    async check(req, res){
         const token = jwt.sign(
 
             {id: req.user.id, username: req.user.username, role: req.user.role}, 
