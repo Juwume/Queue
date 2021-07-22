@@ -14,11 +14,17 @@ const Login = observer(({show, onHide}) => {
 
   const signIn = async () => {
       
-      const data = await login(username,password)
+      try {
+        const data = await login(username,password)
+        user.setUser(true)
+        user.setIsAuth(true)
+        onHide()
+      } catch (error) {
+        alert(error.response.data.message)
+      }
+
+
       
-      user.setUser(true)
-      user.setIsAuth(true)
-      onHide()
 
   }
     return (

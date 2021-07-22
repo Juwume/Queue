@@ -5,7 +5,7 @@ import { Context } from "./index";
 import AppRouter from "./components/AppRouter";
 import NavBar from './components/NavBar'
 import { check } from "./http/userAPI";
-import { Spinner } from "react-bootstrap";
+import { Container, Spinner } from "react-bootstrap";
 
 
 
@@ -23,7 +23,15 @@ const App = observer(() => {
     
   })
 
-  if(loading) return <Spinner style={{alignSelf:'center'}} animation='border'/>
+  if(loading) return (
+    <Container 
+      className='d-flex justify-content-center align-items-center'
+      style={{height: window.innerHeight - 54}}
+    >
+      <Spinner  animation='border'/>
+    </Container>
+    
+  )
 
   return (
     <BrowserRouter>

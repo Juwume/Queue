@@ -45,6 +45,7 @@ const NavBar = observer(() => {
     const logOut = () => {
       user.setUser({})
       user.setIsAuth(false)
+      localStorage.setItem('token', null)
     }
 
     const {user} = useContext(Context)

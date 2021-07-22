@@ -1,3 +1,4 @@
+import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { Container,Form,Card, Button } from 'react-bootstrap'
 
@@ -9,7 +10,7 @@ const clearInput = (idElem) =>{
     }
 }
 
-const Create = () => {
+const Create = observer(() => {
     return (
         <Container>
             <Card className='align-items-center mt-4 p-4'>
@@ -17,7 +18,6 @@ const Create = () => {
                     <Form.Label>Название</Form.Label>
                     <Form.Control
                         id='name'
-                        onClick={clearInput('name')}
                         style={{width:'98.5%'}}
                         placeholder={'Введите название'}
                         className='mb-3'
@@ -25,7 +25,6 @@ const Create = () => {
                     <Form.Label>Описание</Form.Label>
                     <Form.Control
                         id='description'
-                        onClick={clearInput('description')}
                         style={{width:'98.5%'}}
                         placeholder={'Напишите описание для вашей очереди'}
                         as="textarea"
@@ -36,6 +35,10 @@ const Create = () => {
                             
                             variant={'outline-secondary'} 
                             className='m-2'
+                            onClick={() => {
+                                clearInput('description')
+                                clearInput('name')
+                            }}
                         >
                             Очистить
                     </Button>
@@ -53,6 +56,6 @@ const Create = () => {
             
         </Container>
     )
-}
+})
 
 export default Create
