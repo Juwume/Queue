@@ -68,6 +68,9 @@ const NavBar = observer(() => {
         </Nav>
         {user.isAuth ? 
         <Nav className='ml-auto'>
+          <Navbar.Text>
+           Пользователь: <a href="#">{user.user.username}</a>
+          </Navbar.Text>
           <Button
       
             variant="primary"

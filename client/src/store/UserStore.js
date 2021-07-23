@@ -20,6 +20,6 @@ export default class UserStore {
     }
 
     get user(){
-        return this.user
+        return this._user
     }
 }

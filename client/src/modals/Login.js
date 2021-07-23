@@ -9,6 +9,7 @@ import {Context} from '../index'
 const Login = observer(({show, onHide}) => {
 
   const {user} = useContext(Context)
+  
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
@@ -16,7 +17,7 @@ const Login = observer(({show, onHide}) => {
       
       try {
         const data = await login(username,password)
-        user.setUser(true)
+        user.setUser(data)
         user.setIsAuth(true)
         onHide()
       } catch (error) {
