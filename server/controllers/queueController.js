@@ -34,7 +34,11 @@ class queueController{
    async addToQueue(req,res){
        try {
             const {userId, queueId} = req.body
-            const adding = await QueueUser.create({userId, queueId})
+            console.log(userId + ' ' + queueId)
+            const adding = await QueueUser.create({
+                queueId, 
+                userId,
+            })
             res.json(adding)
         
        } catch (error) {
@@ -82,25 +86,49 @@ class queueController{
     }
 
     async searchById(req, res,next){
-    try {
-        const {id} = req.query
-        let candidate = await Queue.findOne({
-            where:{
-                id
+        try {
+            const {id} = req.query
+            let candidate = await Queue.findOne({
+                where:{
+                    id
+                }
+            })
+            if(!candidate){
+                return res.json({message: "Ничего не найдено"})
             }
-        })
-        if(!candidate){
-            return res.json({message: "Ничего не найдено"})
-        }
-        
-        return res.json(candidate)
+            
+            return res.json(candidate)
 
         } catch (error) {
-            return next(ApiError.internal('Не удалось выполнить запрос'))
+                return next(ApiError.internal('Не удалось выполнить запрос'))
+            }
+            
+
+
+    }
+
+    async createQueue(req, res){
+        try {
+            const {name,description} = req.body
+            const created = await Queue.create({name, description})
+            return res.json(created)
+        } catch (error) {
+            return res.json({message:'Ошибка'})
         }
-        
+    }
 
-
+    async deleteQueue(req, res){
+        try {
+            const {id} = req.body
+            const deleted = await Queue.destroy({
+                where:{
+                    id
+                }
+            })
+            return res.json(deleted)
+        } catch (error) {
+            return res.json({message:'Ошибка'})
+        }
     }
 
 }
