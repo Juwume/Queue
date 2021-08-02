@@ -2,7 +2,7 @@ import {makeAutoObservable} from 'mobx'
 
 export default class QueuesStore {
     constructor(){
-       this._queues = []
+       this._queues = {}
         makeAutoObservable(this)
     }
 
