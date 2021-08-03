@@ -27,3 +27,12 @@ export const getQs = async (id) => {
     })
     return data
 }
+
+export const getUser = async (id) => {
+    const {data} = await $host.get('api/user/getUser',{
+        params:{
+            id
+        }
+    })
+    return data
+}

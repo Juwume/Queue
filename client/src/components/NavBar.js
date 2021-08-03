@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { Context } from '../index'
 import {NavLink,Navbar,Container,Button,Nav} from 'react-bootstrap'
-import { ABOUT_ROUTE, FIND_ROUTE,CREATE_ROUTE, MYQS_ROUTE } from '../utils/consts'
+import { ABOUT_ROUTE, FIND_ROUTE,CREATE_ROUTE, MYQS_ROUTE, PROFILE_ROUTE } from '../utils/consts'
 import {observer} from 'mobx-react-lite'
 import Login from '../modals/Login'
 import Registration from '../modals/Registration'
@@ -71,7 +71,7 @@ const NavBar = observer(() => {
         {user.isAuth ? 
         <Nav className='ml-auto'>
           <Navbar.Text>
-           Пользователь: <a href="#">{user.user.username}</a>
+           Пользователь: <a href={PROFILE_ROUTE+'/'+user.user.id}>{user.user.username}</a>
           </Navbar.Text>
           <Button
       

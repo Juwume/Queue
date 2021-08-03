@@ -101,6 +101,22 @@ class UserController{
         }
         
     }
+    async getUser(req, res, next){
+        try {
+            const {id} = req.query
+            let query = await User.findOne({
+                attributes: ['id','username'], 
+                where:{
+                    id
+            }})
+            if(!query)
+                return res.json({message:"Такого пользователя нет"})
+            return res.json(query) 
+        } catch (error) {
+            return next(ApiError.internal('Не удалось выполнить запрос'))
+        }
+        
+    }
 
 
 }

@@ -1,9 +1,10 @@
 import { observer } from 'mobx-react-lite'
 import React, {useContext, useEffect,useState} from 'react'
 import { Card, Container, Row, Col, Button } from 'react-bootstrap'
-import { useParams } from 'react-router-dom/cjs/react-router-dom.min'
+import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min'
 import { addToQ, getUsers, leave } from '../http/queueAPI'
 import { Context } from '../index'
+import { PROFILE_ROUTE } from '../utils/consts'
 
 const Queue = observer(() => {
 
@@ -11,6 +12,7 @@ const Queue = observer(() => {
     const [descQueue, setDescQueue] = useState('')
     const {user, curUsers} = useContext(Context)
     const {id} = useParams()
+    const history = useHistory()
     const update = async () => {
         let response = await fetch(process.env.REACT_APP_API_URL + 'api/queue?id='+id)
         
@@ -90,15 +92,14 @@ const Queue = observer(() => {
                         <Card className='p-4'>
                             <h2 >{nameQueue}</h2>
                             <h3>Уникальный номер: {id}</h3>
-                            {descQueue? 
-                            <p style={{font:'italic 20px  Arial', opacity:'0.75'}}>"{descQueue}"</p> : null
-                        }
+                            {descQueue? <p style={{font:'italic 20px  Arial', opacity:'0.75'}}>"{descQueue}"</p> : null}
                             
                             {curUsers.users? curUsers.users.map((data,index)=>{
                                 return(
                                     <Card 
+                                    onClick={()=>history.push(PROFILE_ROUTE+'/'+data.id)}
                                     key={index}
-                                    style={{height:'50px', background:'#212529', color:'white', textAlign:'center', fontSize:'20px', border:'2px solid white'}}
+                                    style={{height:'50px', background:'#212529', color:'white', textAlign:'center', fontSize:'20px', border:'2px solid white', cursor:'pointer'}}
                                     >{`${index+1}. ${data.username}`}</Card>
                                 )
                             }) : null}
@@ -109,7 +110,7 @@ const Queue = observer(() => {
                         <Card className='p-2'>
                             {(() =>{
                                 if(!user.isAuth) return <h4>Вы не можете встать в очередь, пожалуйста авторизуйтесь</h4>
-                                else if(curUsers.users.filter((data,index)=>{
+                                else if(curUsers.users.filter((data)=>{
                                         return data.id === user.user.id
                                     }).length > 0)
                                     return( 
