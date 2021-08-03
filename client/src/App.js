@@ -13,7 +13,7 @@ import jwt_decode from 'jwt-decode'
 const App = observer(() => {
   const {user} = useContext(Context)
   const [loading,setLoading] = useState(true)
-  let temp
+  
   useEffect( () => {
     setTimeout( () =>{
       check().then( () => {

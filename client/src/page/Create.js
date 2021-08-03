@@ -3,7 +3,6 @@ import React, {useState} from 'react'
 import { Container,Form,Card, Button } from 'react-bootstrap'
 import { useHistory } from 'react-router-dom'
 import { createQ } from '../http/queueAPI'
-import { Context } from '../index'
 import { QUEUE_ROUTE } from '../utils/consts'
 
 const clearInput = (idElem) =>{

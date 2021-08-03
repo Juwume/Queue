@@ -3,15 +3,17 @@ import React, {useContext, useState} from 'react'
 import {Context} from '../index'
 import { Button, Card, Container, Form} from 'react-bootstrap'
 import { searchById, searchByName } from '../http/queueAPI'
+import Found from '../modals/Found'
 
 const Find = observer(() => {
     const {queues} = useContext(Context)
     const [name, setName] = useState('')
     const [number, setNumber] = useState('')
+    const [foundVisible, setFoundVisible] = useState(false)
 
     const findByName = async () => {
         try {
-            console.log(name)
+            
             searchByName(name).then(data=>{
                 queues.setQueues(data)
                 console.log(queues.queues)
@@ -23,7 +25,7 @@ const Find = observer(() => {
     }
     const findByNumber = async () => {
         try {
-            console.log(number)
+            
             searchById(number).then(data=>{
                 queues.setQueues(data)
                 console.log(queues.queues)
@@ -57,7 +59,10 @@ const Find = observer(() => {
                     </Button>
                     <Button 
                             disabled={number? false : true}
-                            onClick={findByNumber}
+                            onClick={()=>{
+                                findByNumber()
+                                setFoundVisible(true)
+                            }}
                             variant={'outline-success'} 
                             className='mt-2 mb-2'
                         >
@@ -85,7 +90,10 @@ const Find = observer(() => {
                             Очистить
                     </Button>
                     <Button 
-                            onClick={findByName}
+                            onClick={()=>{
+                                findByName()
+                                setFoundVisible(true)
+                            }}
                             disabled={name? false : true}
                             variant={'outline-success'} 
                             className='mt-2 mb-2'
@@ -98,7 +106,9 @@ const Find = observer(() => {
                 </Form>
 
             </Card>
+            <Found show={foundVisible} onHide={() => setFoundVisible(false)}/>
         </Container>
+        
     )
 })
 

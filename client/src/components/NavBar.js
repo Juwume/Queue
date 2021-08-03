@@ -1,10 +1,11 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext, useState } from 'react'
 import { Context } from '../index'
 import {NavLink,Navbar,Container,Button,Nav} from 'react-bootstrap'
 import { ABOUT_ROUTE, FIND_ROUTE,CREATE_ROUTE, MYQS_ROUTE } from '../utils/consts'
 import {observer} from 'mobx-react-lite'
 import Login from '../modals/Login'
 import Registration from '../modals/Registration'
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 
 
 // function simulateNetworkRequest() {
@@ -46,10 +47,11 @@ const NavBar = observer(() => {
       user.setUser({})
       user.setIsAuth(false)
       localStorage.setItem('token', null)
+      history.push(ABOUT_ROUTE)
     }
 
     const {user} = useContext(Context)
-   
+    const history = useHistory()
     const [loginVisible, setLoginVisible] = useState(false)
     const [registrationVisible, setRegistrationVisible] = useState(false)
 

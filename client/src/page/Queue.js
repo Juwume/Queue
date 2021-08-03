@@ -7,21 +7,35 @@ import { Context } from '../index'
 
 const Queue = observer(() => {
 
+    const [nameQueue, setNameQueue] = useState('')
+    const [descQueue, setDescQueue] = useState('')
     const {user, curUsers} = useContext(Context)
     const {id} = useParams()
     const update = async () => {
         let response = await fetch(process.env.REACT_APP_API_URL + 'api/queue?id='+id)
         
         let parse = await response.json()
-       
-        if(!(parse[0].users.length == curUsers.users.length) || !(parse[0].users.every(function(element, index) {
-            return curUsers.users.filter((data)=>{
-                return data.id === element.id
-            }).length > 0
-        }))) {
-            clearInterval(timerId);
-            curUsers.setUsers(parse[0].users)
-        }
+       try {
+           console.log(parse)
+           if(!parse.message){
+            document.getElementById('nobody').innerHTML =''
+            if(!(parse[0].users.length === curUsers.users.length) || !(parse[0].users.every(function(element, index) {
+                return curUsers.users.filter((data)=>{
+                    return data.id === element.id
+                }).length > 0
+            }))) {
+                clearInterval(timerId);
+                curUsers.setUsers(parse[0].users)
+            }
+           } else {
+               document.getElementById('nobody').innerHTML = "В очереди никого нет, станьте первым!" 
+               clearInterval(timerId);
+                curUsers.setUsers([])
+            }    
+       } catch (error) {
+           return
+       }
+        
         
 
         
@@ -51,37 +65,51 @@ const Queue = observer(() => {
     useEffect(()=>{
         getUsers(id).then(data=>{
             try {
+                console.log(data)
+                setNameQueue(data[0].name)
+                setDescQueue(data[0].description) 
                 curUsers.setUsers(data[0].users)
             } catch (error) {
-                alert("Ошибка")
+                document.getElementById('nobody').innerHTML = "В очереди никого нет, станьте первым!"
+                setNameQueue(data.queueName)
+                setDescQueue(data.queueDesc)
+                curUsers.setUsers([])
             }
             
-            // curUsers.users.map(data=>console.log(data.username))
+           
         })
     }, [curUsers,id])
+    
 
 
     return (
         <Container>
             
                 <Row>
-                    <Col className='mt-4' sm={8}>
+                    <Col className='mt-4' sm={9}>
                         <Card className='p-4'>
-                            <h2>Очередь</h2>
-                            {curUsers.users.map((data)=>{
+                            <h2 >{nameQueue}</h2>
+                            <h3>Уникальный номер: {id}</h3>
+                            {descQueue? 
+                            <p style={{font:'italic 20px  Arial', opacity:'0.75'}}>"{descQueue}"</p> : null
+                        }
+                            
+                            {curUsers.users? curUsers.users.map((data,index)=>{
                                 return(
                                     <Card 
+                                    key={index}
                                     style={{height:'50px', background:'#212529', color:'white', textAlign:'center', fontSize:'20px', border:'2px solid white'}}
-                                    >{data.username}</Card>
+                                    >{`${index+1}. ${data.username}`}</Card>
                                 )
-                            })}
+                            }) : null}
+                            <h4 id='nobody'></h4>
                         </Card>
                     </Col>
-                    <Col className='mt-4' sm={4}>
+                    <Col className='mt-4' sm={3}>
                         <Card className='p-2'>
                             {(() =>{
                                 if(!user.isAuth) return <h4>Вы не можете встать в очередь, пожалуйста авторизуйтесь</h4>
-                                else if(curUsers.users.filter((data)=>{
+                                else if(curUsers.users.filter((data,index)=>{
                                         return data.id === user.user.id
                                     }).length > 0)
                                     return( 

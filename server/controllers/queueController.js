@@ -21,7 +21,12 @@ class queueController{
             })
 
             if(query.length == 0){
-                return res.json({message: "В очереди никого нет"})
+                query = await Queue.findOne({
+                    where:{
+                        id
+                    }
+                })
+                return res.json({message: "В очереди никого нет", queueName: query.name, queueDesc: query.description})
             }
             return res.json(query)
 
@@ -88,7 +93,7 @@ class queueController{
     async searchById(req, res,next){
         try {
             const {id} = req.query
-            let candidate = await Queue.findOne({
+            let candidate = await Queue.findAll({
                 where:{
                     id
                 }

@@ -1,5 +1,5 @@
 import React, {useState, useContext} from 'react'
-import { Button, Form, Modal, Row } from 'react-bootstrap'
+import { Button, Form, Modal } from 'react-bootstrap'
 import { registration } from '../http/userAPI'
 import { observer } from 'mobx-react-lite'
 import {Context} from '../index'
