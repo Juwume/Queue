@@ -14,4 +14,6 @@ This app works as a web site.
 2. ```docker-compose build```
 3. ```docker-compose up```
 4. Enjoy
+## TOOLTIPS
+ - Inside `/client` there is a readme file for `React`
 
