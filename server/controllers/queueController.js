@@ -39,7 +39,6 @@ class queueController{
    async addToQueue(req,res){
        try {
             const {userId, queueId} = req.body
-            console.log(userId + ' ' + queueId)
             const adding = await QueueUser.create({
                 queueId, 
                 userId,

@@ -14,11 +14,10 @@ const Queue = observer(() => {
     const {id} = useParams()
     const history = useHistory()
     const update = async () => {
-        let response = await fetch(process.env.REACT_APP_API_URL + 'api/queue?id='+id)
-        
+        let response = await fetch(process.env.REACT_APP_API_URL + '/api/queue?id='+id)
         let parse = await response.json()
+        console.log(parse)
        try {
-           console.log(parse)
            if(!parse.message){
             document.getElementById('nobody').innerHTML =''
             if(!(parse[0].users.length === curUsers.users.length) || !(parse[0].users.every(function(element, index) {
@@ -37,10 +36,6 @@ const Queue = observer(() => {
        } catch (error) {
            return
        }
-        
-        
-
-        
     }
     
     const getIn = async () => {
@@ -49,7 +44,7 @@ const Queue = observer(() => {
             await update()
             return res
         } catch (error) {
-            alert(error.response.data.message)
+            alert(error.response)
         }
         
     }
@@ -60,14 +55,13 @@ const Queue = observer(() => {
             
             return res
         } catch (error) {
-            alert(error.response.data.message)
+            alert(error.response)
         }
     }
-    let timerId = setInterval(update, 5000)
+    let timerId = setInterval(update, 10000)
     useEffect(()=>{
         getUsers(id).then(data=>{
             try {
-                console.log(data)
                 setNameQueue(data[0].name)
                 setDescQueue(data[0].description) 
                 curUsers.setUsers(data[0].users)

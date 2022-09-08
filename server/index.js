@@ -14,7 +14,7 @@ app.use('/', router)
 //the very last because it ends the req
 app.use(errorHandler)
 
-const PORT = process.env.PORT || 5000
+const PORT = process.env.SERVER_PORT || "3080"
 
 const start = async () => {
   try {
