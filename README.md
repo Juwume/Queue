@@ -11,8 +11,6 @@ Tired of staying in queues in university where everyone was trying to get in wit
 ### Search page
 ![image](https://user-images.githubusercontent.com/71034341/235685600-7afe2162-3571-4c52-b893-499fbf768cae.png)
 
-### About page
-
 ## TECHNOLOGIES
 This app works as a web site.
 
